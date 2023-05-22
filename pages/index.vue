@@ -5,8 +5,10 @@
                 <div class="card">
                     <div class="card-header">
                         <h2>Data List</h2>
+                        {{ contactState }}
                     </div>
                     <div class="card-body">
+            
                         <table class="table table-bordered">
                             <thead>
                                 <tr>
@@ -19,13 +21,15 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <td>Name</td>
-                                    <td>Email</td>
-                                    <td>Phone</td>
-                                    <td>Address</td>
-                                    <td>Image</td>
-                                    <td>Action</td>
+                                <tr v-for="ctd in contactState" :key="ctd.id">
+                                    <td>{{ ctd.name}}</td>
+                                    <td>{{ ctd.email}}</td>
+                                    <td>{{ ctd.phone}}</td>
+                                    <td>{{ ctd.address}}</td>
+                                    <td>image</td>
+                                    <td>
+                                        <NuxtLink class="btn btn-info" to="/">Edit</NuxtLink>
+                                    </td>
                                 </tr>
                             </tbody>
                         </table>
@@ -70,9 +74,18 @@
             </div>
         </div>
     </div>
+    
 </template>
 
 <script setup>
+
+    const {data} = await useFetch("/api/contact/getdata", {
+        method: 'GET'
+    }) 
+    let contactState = useState(()=> [])
+    contactState.value = data
+    console.log(contactState)
+
 
 </script>
 
